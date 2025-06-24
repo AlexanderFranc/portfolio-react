@@ -7,21 +7,21 @@ const Projects = () => {
     {
       title: 'Aplicación de Gestión de Tareas',
       description: 'Una aplicación web desarrollada con React y Node.js que permite a los usuarios gestionar sus tareas diarias con interfaz moderna y responsive.',
-      image: 'https://cdn.dribbble.com/userupload/9661662/file/original-722a631d12b3b44c6c7c1c4b5c9b27e7.png?resize=1600x1200',
+      image: '/images/project1.png',
       technologies: ['React', 'Node.js', 'MongoDB'],
       demo: 'https://proyecto1-demo.com'
     },
     {
       title: 'E-commerce Platform',
       description: 'Plataforma de comercio electrónico con sistema de pagos integrado y gestión de inventario en tiempo real.',
-      image: 'https://cdn.dribbble.com/userupload/9536741/file/original-f0f6f93e3c1fc44c48ceec6ad55d246e.png?resize=1600x1200',
+      image: '/images/project2.png',
       technologies: ['React', 'Express', 'PostgreSQL'],
       demo: 'https://proyecto2-demo.com'
     },
     {
       title: 'Dashboard Analytics',
       description: 'Dashboard interactivo para visualización de datos y análisis de métricas empresariales en tiempo real.',
-      image: 'https://cdn.dribbble.com/userupload/9661817/file/original-5b2c3e15f9fa4c8793f8d0aa73e33365.png?resize=1600x1200',
+      image: '/images/project3.png',
       technologies: ['React', 'D3.js', 'Firebase'],
       demo: 'https://proyecto3-demo.com'
     }
