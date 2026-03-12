@@ -1,0 +1,513 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+  /* Light Mode Colors */
+  --bg-body: #f4f5f8;
+  --bg-app: #f4f4f4;
+  --bg-main: #ffffff;
+  --bg-sidebar: #f2f2f2;
+  --text-primary: #000000;
+  --text-secondary: #757575;
+  --text-title: #0f4c75;
+  --text-google-top: #3c4043;
+  --text-google-bottom: #5f6368;
+  --btn-bg: #ffffff;
+  --btn-hover: #f8f9fa;
+  --btn-border: #ddd;
+  --btn-shadow: rgba(0,0,0,0.2);
+  --sidebar-border: #e0e0e0;
+  --google-circle-bg: #0d47a1;
+  --google-circle-text: #ffffff;
+  --google-icon-bg: #ffffff;
+}
+
+/* Dark Mode Variables */
+body.dark-mode {
+  color-scheme: dark; /* Crucial for native inputs and scrollbars */
+  
+  --bg-body: #121212;
+  --bg-app: #000000;
+  --bg-main: #1e1e1e;
+  --bg-sidebar: #1e1e1e;
+  --text-primary: #ffffff; /* White text */
+  --text-secondary: #ffffff; /* White text */
+  --text-title: #ffffff; /* White text */
+  --text-google-top: #ffffff; /* White text */
+  --text-google-bottom: #ffffff; /* White text (no celeste) */
+  --btn-bg: #2c2c2c;
+  --btn-hover: #3c3c3c;
+  --btn-border: #444;
+  --btn-shadow: rgba(0,0,0,0.5);
+  --sidebar-border: #333;
+  --google-circle-bg: #0d47a1; /* Dark Blue (Brand) - no celeste */
+  --google-circle-text: #ffffff; /* White text inside circle */
+  --google-icon-bg: #ffffff;
+
+  /* Ionic Dark Theme Variables */
+  --ion-background-color: #121212;
+  --ion-background-color-rgb: 18,18,18;
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255,255,255;
+  --ion-item-background: #1e1e1e;
+  --ion-item-border-color: #333;
+  
+  /* Standard Ionic Dark Steps */
+  --ion-color-step-50: #1e1e1e;
+  --ion-color-step-100: #2a2a2a;
+  --ion-color-step-150: #363636;
+  --ion-color-step-200: #414141;
+  --ion-color-step-250: #4d4d4d;
+  --ion-color-step-300: #595959;
+  --ion-color-step-350: #656565;
+  --ion-color-step-400: #717171;
+  --ion-color-step-450: #7d7d7d;
+  --ion-color-step-500: #898989;
+  --ion-color-step-550: #949494;
+  --ion-color-step-600: #a0a0a0;
+  --ion-color-step-650: #acacac;
+  --ion-color-step-700: #b8b8b8;
+  --ion-color-step-750: #c4c4c4;
+  --ion-color-step-800: #d0d0d0;
+  --ion-color-step-850: #dbdbdb;
+  --ion-color-step-900: #e7e7e7;
+  --ion-color-step-950: #f3f3f3;
+}
+
+/* Specific component overrides for dark mode */
+body.dark-mode ion-datetime {
+  --background: #1e1e1e;
+  --background-rgb: 30,30,30;
+  --ion-color-base: #ffffff;
+  color: #ffffff;
+}
+
+body.dark-mode ion-picker {
+  --background: #1e1e1e;
+  --color: #ffffff;
+}
+
+body.dark-mode ion-popover {
+  --background: #1e1e1e;
+  --color: #ffffff;
+}
+
+body.dark-mode ion-modal {
+  --background: #1e1e1e;
+}
+
+body.dark-mode ion-content {
+  --background: #121212;
+  --color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Auto-switch if no class present (JS will handle class mostly) */
+    --bg-body: #121212;
+    --bg-app: #000000;
+    --bg-main: #1e1e1e;
+    --bg-sidebar: #1e1e1e;
+    --text-primary: #ffffff; /* White text */
+    --text-secondary: #ffffff; /* White text */
+    --text-title: #ffffff; /* White text */
+    --text-google-top: #ffffff; /* White text */
+    --text-google-bottom: #ffffff; /* White text (no celeste) */
+    --btn-bg: #2c2c2c;
+    --btn-hover: #3c3c3c;
+    --btn-border: #444;
+    --btn-shadow: rgba(0,0,0,0.5);
+    --sidebar-border: #333;
+    --google-circle-bg: #0d47a1; /* Dark Blue (Brand) - no celeste */
+    --google-circle-text: #ffffff; /* White text inside circle */
+    --google-icon-bg: #ffffff;
+  }
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--btn-bg);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 100;
+  color: var(--text-title);
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  background-color: var(--btn-hover);
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+}
+
+/* Login Styles */
+.app-body { 
+  display: grid; 
+  grid-template-columns: 3fr 1fr; 
+  background-color: var(--bg-app); 
+  height: 100vh;
+  width: 100%;
+} 
+
+.col-main { 
+  background-color: var(--bg-main); 
+  padding: 20px; 
+  background-image: url('https://portalalumnos.uisek.edu.ec/images/SEKNUEVA.jpg');
+  background-repeat: no-repeat; 
+  background-size: cover; 
+  background-position: center;
+} 
+
+.col-sidebar { 
+  background-color: var(--bg-sidebar); 
+  padding: 20px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;     
+  text-align: center;      
+  position: relative; 
+  overflow: hidden; 
+  flex-direction: column;
+} 
+
+.sidebar-content-wrapper { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;    
+  gap: 25px; 
+  max-width: 300px; 
+  width: 100%;
+} 
+
+.col-sidebar h1 { 
+  font-family: 'Roboto', sans-serif; 
+  font-size: 22px; 
+  color: var(--text-title); 
+  font-weight: 700; 
+  margin: 0; 
+  line-height: 1.2; 
+} 
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.right-column-image {
+  max-width: 250px;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.sidebar-logo {
+  width: 220px;
+  margin: 20px auto;
+  display: block;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* Google Button - Ultra Compact */
+.custom-google-btn {
+  background-color: #1a73e8;
+  color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  width: 100%; 
+  max-width: 280px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px var(--btn-shadow);
+  transition: all 0.2s ease;
+  height: 38px;
+  min-height: 38px;
+  font-family: 'Roboto', sans-serif;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.custom-google-btn:hover {
+  box-shadow: 0 2px 4px var(--btn-shadow);
+  background-color: #1557b0;
+}
+
+.google-initial-circle {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--google-circle-text);
+  background-color: var(--google-circle-bg);
+  border-radius: 50%;
+  margin-left: 2px;
+  flex-shrink: 0;
+  border: none;
+}
+
+.google-text-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 0 8px;
+  text-align: left;
+  line-height: 1.1;
+  overflow: hidden;
+}
+
+.google-text-top {
+  font-size: 9px;
+  color: #ffffff;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.google-text-bottom {
+  font-size: 9px;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.google-icon-circle {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--google-icon-bg);
+  border-radius: 50%;
+  margin-right: 2px;
+  flex-shrink: 0;
+}
+
+.google-icon-img {
+  width: 18px;
+  height: 18px;
+}
+
+/* Dashboard Styles */
+.dashboard-body {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  padding-top: 56px; /* Space for header */
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  overflow: hidden;
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  /* Ionic variables for font consistency */
+  --ion-font-family: 'Roboto', sans-serif;
+  --ion-background-color: var(--bg-body);
+  --ion-text-color: var(--text-primary);
+}
+
+/* Force Roboto on all dashboard children */
+.dashboard-body ion-content,
+.dashboard-body ion-item,
+.dashboard-body ion-label,
+.dashboard-body ion-input,
+.dashboard-body ion-select,
+.dashboard-body ion-button,
+.dashboard-body p,
+.dashboard-body h1,
+.dashboard-body h2,
+.dashboard-body h3,
+.dashboard-body h4,
+.dashboard-body h5,
+.dashboard-body h6,
+.dashboard-body div,
+.dashboard-body span {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+#sidebar {
+  width: 250px;
+  background-color: var(--bg-main);
+  border-right: 1px solid var(--sidebar-border);
+  height: 100%;
+  overflow-y: auto;
+  transition: width 0.3s ease;
+  flex-shrink: 0;
+}
+
+#sidebar.collapsed {
+  width: 60px;
+}
+
+/* Sidebar Specific Typography */
+#sidebar ion-item ion-label {
+  text-transform: uppercase !important;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px;
+}
+
+.main-content-wrapper {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: var(--bg-body);
+}
+
+/* Custom Elements Display Fix */
+page-login, page-dashboard {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Mobile Layout - Full Screen Background */
+@media (max-width: 768px) {
+  /* Sidebar Mobile Behavior: Overlay and Full Collapse */
+  .dashboard-body {
+    position: relative;
+  }
+
+  #sidebar {
+    position: absolute;
+    z-index: 2000;
+    top: 56px;
+    height: calc(100% - 56px);
+    box-shadow: 2px 0 12px rgba(0,0,0,0.3);
+  }
+
+  #sidebar.collapsed {
+    width: 0 !important;
+    min-width: 0 !important;
+    overflow: hidden;
+    border: none;
+  }
+
+  .app-body {
+    display: block; /* Remove grid */
+    height: 100vh;
+  }
+
+  .col-main {
+    display: none; /* Hide separate image column */
+  }
+
+  .col-sidebar {
+    width: 100%;
+    height: 100%;
+    /* Use the same background image as col-main but with a gradient overlay */
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+      url('https://portalalumnos.uisek.edu.ec/images/SEKNUEVA.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Ensure text is readable with a slight overlay if needed, or rely on contrast */
+    background-color: transparent !important; /* Override theme bg */
+  }
+
+  /* Force White/Blue text on Mobile to ensure visibility against image */
+  .col-sidebar h1 { 
+    color: #0f4c75 !important; /* Dark Blue for contrast on white overlay */
+    text-shadow: none; 
+  }
+  .col-sidebar h1 span { 
+    color: #0d47a1 !important; /* Darker Blue */
+    text-shadow: none;
+  }
+  
+  /* Mobile Dark Mode Override */
+  /* When body has .dark-mode class, switch to dark overlay and light text */
+  body.dark-mode .col-sidebar {
+    background-image: 
+      linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+      url('https://portalalumnos.uisek.edu.ec/images/SEKNUEVA.jpg');
+  }
+
+  body.dark-mode .col-sidebar h1 {
+    color: #ffffff !important; /* White text on dark overlay */
+  }
+  
+  body.dark-mode .col-sidebar h1 span {
+    color: #ffffff !important; /* White text (no celeste) */
+  }
+
+  /* Google Button text adjustments for contrast on image */
+  #custom-google-btn {
+    /* background-color removed to use global blue */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+}
+
+/* Dashboard Header Styles */
+.main-header ion-toolbar {
+  --background: #ffffff;
+  --color: #0f4c75;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-title {
+  color: #0f4c75;
+  font-size: 14px;
+  margin-left: 0px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.header-btn {
+  color: #0f4c75;
+}
+
+/* Dark Mode Header Overrides */
+body.dark-mode .main-header ion-toolbar {
+  --background: var(--bg-main);
+  --color: var(--text-primary);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+body.dark-mode .header-title {
+  color: var(--text-primary);
+}
+
+body.dark-mode .header-btn {
+  color: var(--text-primary);
+}
+  
+  /* Text inside Google button should follow brand guidelines (Grey/Dark) or user rule? */
+  /* User said "letras deben ser solo blancas o azules" */
+  /* If I make google button text white, it needs dark background. */
+  /* But Google button is usually white with dark text. */
+  /* I will respect user rule "letras ... blancas o azules" but Google button is a specific component. */
+  /* However, the user said "no quiero que topes otra cosa" -> maybe just the main text? */
+  /* I'll stick to making the title/logo text visible. */
+  /* Reverting button text changes to avoid breaking brand look unless unreadable. */
+

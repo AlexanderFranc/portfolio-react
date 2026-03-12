@@ -1,0 +1,64 @@
+{
+  "jhonatan.franco@uisek.edu.ec": {
+    "jornadas": [
+      {
+        "hospitalId": "",
+        "departamento": "",
+        "tutor": "",
+        "fecha": "2026-01-02T09:49:00",
+        "horaInicio": "09:00",
+        "horaFin": "12:00",
+        "estudiantes": [
+          {
+            "id": "e1",
+            "nombre": "Ana López",
+            "grupo": 1,
+            "materia": "m1"
+          },
+          {
+            "id": "e2",
+            "nombre": "Carlos Pérez",
+            "grupo": 1,
+            "materia": "m1"
+          },
+          {
+            "id": "e3",
+            "nombre": "María González",
+            "grupo": 2,
+            "materia": "m1"
+          },
+          {
+            "id": "e1769522783993",
+            "nombre": "Pedro Benitez",
+            "grupo": 3,
+            "materia": "m1"
+          },
+          {
+            "id": "e1769698920913",
+            "nombre": "Alexander Franco ",
+            "grupo": 3,
+            "materia": "m1"
+          }
+        ],
+        "asistencia": {
+          "e1": true,
+          "e2": false,
+          "e1769698920913": false
+        },
+        "rubricas": {
+          "e1769698920913": {
+            "A": {},
+            "B": {}
+          }
+        },
+        "observaciones": {
+          "e1769698920913": ""
+        },
+        "recomendaciones": {
+          "e1769698920913": ""
+        },
+        "_receivedAt": "2026-01-29T15:03:38.542Z"
+      }
+    ]
+  }
+}
