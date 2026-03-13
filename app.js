@@ -414,60 +414,68 @@ function initGoogleSignIn(containerId) {
         btn.disabled = true;
         btn.style.opacity = '0.7';
         try {
-          const ok = await ensureGoogleGsiReady();
-          if (!ok) {
-            setStatus('No se pudo cargar Google Sign-In. Revise su conexión.');
+          const SocialLogin = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.SocialLogin
+            ? window.Capacitor.Plugins.SocialLogin
+            : null;
+
+          if (!SocialLogin || typeof SocialLogin.login !== 'function') {
+            setStatus('No se encontró SocialLogin en esta plataforma.');
             return;
           }
 
-          try {
-            window.google.accounts.id.disableAutoSelect();
-          } catch (e) {}
-
-          if (!window.__GSI_NATIVE_INITED) {
-            window.google.accounts.id.initialize({
-              client_id: clientId,
-              auto_select: false,
-              context: 'signup',
-              callback: async (resp) => {
-                const payload = decodeJwt(resp && resp.credential);
-                const email = payload && payload.email;
-                const fullName = (payload && (payload.name || ((payload.given_name || '') + ' ' + (payload.family_name || '')))) || '';
-                if (!email) {
-                  setStatus('No se pudo obtener el correo de Google.');
-                  return;
-                }
-                await handleBackendLogin(email, fullName);
+          if (!window.__SOCIAL_LOGIN_INITED) {
+            try {
+              if (typeof SocialLogin.initialize === 'function') {
+                await SocialLogin.initialize({
+                  google: { webClientId: clientId, mode: 'online' }
+                });
               }
-            });
-            window.__GSI_NATIVE_INITED = true;
+              window.__SOCIAL_LOGIN_INITED = true;
+            } catch (e) {
+              setStatus('No se pudo inicializar Google en este dispositivo.');
+              return;
+            }
           }
 
-          let host = el.querySelector('#gsi-btn-host-native');
-          if (!host) {
-            host = document.createElement('div');
-            host.id = 'gsi-btn-host-native';
-            host.style.cssText = 'margin-top:10px;display:flex;justify-content:center;';
-            el.appendChild(host);
-          } else {
-            host.innerHTML = '';
-          }
-
-          window.google.accounts.id.renderButton(host, {
-            theme: 'filled_blue',
-            size: 'large',
-            text: 'signin_with',
-            shape: 'pill'
+          const loginRes = await SocialLogin.login({
+            provider: 'google',
+            options: {
+              style: 'bottom',
+              filterByAuthorizedAccounts: false,
+              autoSelectEnabled: false,
+              forcePrompt: true
+            }
           });
 
-          try {
-            window.google.accounts.id.prompt();
-          } catch (e) {}
+          const googleRes = (loginRes && loginRes.result) ? loginRes.result : loginRes;
+          let email = googleRes && googleRes.profile ? googleRes.profile.email : null;
+          let fullName = googleRes && googleRes.profile ? (googleRes.profile.name || '') : '';
 
-          setStatus('Toca el botón de Google que apareció para continuar.');
+          if ((!email || String(email).indexOf('@') === -1) && googleRes && googleRes.idToken) {
+            const payload = decodeJwt(googleRes.idToken);
+            email = payload && payload.email;
+            fullName = (payload && (payload.name || ((payload.given_name || '') + ' ' + (payload.family_name || '')))) || fullName;
+          }
+
+          if (!email) {
+            setStatus('No se pudo obtener el correo de Google.');
+            return;
+          }
+
+          await handleBackendLogin(email, fullName);
         } catch (e) {
-          const msg = (e && (e.message || e.error || e.toString())) ? String(e.message || e.error || e.toString()) : 'Error';
-          setStatus(`No se pudo iniciar sesión con Google. ${msg}`);
+          const msg = (e && (e.message || e.error || e.toString())) ? String(e.message || e.error || e.toString()) : '';
+          const m = msg.toLowerCase();
+          console.error('Google native login failed:', e);
+          if (m.includes('no credentials available') || m.includes('nocredential') || m.includes('no credential')) {
+            setStatus('Google no mostró cuentas disponibles. Revisa Usuarios de prueba / Google Play Services y vuelve a intentar.');
+          } else if (m.includes('developer_error') || m.includes('developers error') || m.includes('10')) {
+            setStatus('Google rechazó la app (configuración OAuth/SHA1). Revisa el SHA1 y el cliente Android en Google Cloud.');
+          } else if (m.includes('client id is not set') || m.includes('clientid')) {
+            setStatus('Falta configurar el Client ID de Google en la app.');
+          } else {
+            setStatus('No se pudo iniciar sesión con Google. Intenta nuevamente o cambia de cuenta.');
+          }
         } finally {
           btn.disabled = false;
           btn.style.opacity = '';
